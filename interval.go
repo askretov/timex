@@ -66,7 +66,7 @@ func (i Interval) Nanoseconds() int64 {
 	return i.end.Sub(i.start).Nanoseconds()
 }
 
-// IsZero reports whether i start & end values are zero time values
+// IsZero reports whether i's start & end values are zero time values
 func (i Interval) IsZero() bool {
 	return i.start.IsZero() && i.end.IsZero()
 }
@@ -95,4 +95,9 @@ func (i Interval) StringDates() string {
 // Actually, it returns copy of i where end = end - 1 nanosecond
 func (i Interval) HalfOpenEnd() Interval {
 	return NewInterval(i.Start(), i.End().Add(-1))
+}
+
+// IsValid reports whether i's start & end both values are not zero
+func (i Interval) IsValid() bool {
+	return !i.start.IsZero() && !i.end.IsZero()
 }

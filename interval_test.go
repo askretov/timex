@@ -424,3 +424,41 @@ func TestInterval_HalfOpenEnd(t *testing.T) {
 		})
 	}
 }
+
+func TestInterval_IsValid(t *testing.T) {
+	tests := []struct {
+		name     string
+		interval Interval
+		want     bool
+	}{
+		{
+			name: "both are not zero",
+			interval: NewInterval(
+				time.Date(2021, 6, 1, 0, 0, 0, 0, time.UTC),
+				time.Date(2021, 6, 5, 0, 0, 0, 0, time.UTC),
+			),
+			want: true,
+		},
+		{
+			name:     "start is zero",
+			interval: NewInterval(time.Time{}, time.Date(2021, 6, 5, 0, 0, 0, 0, time.UTC)),
+			want:     false,
+		},
+		{
+			name:     "end is zero",
+			interval: NewInterval(time.Date(2021, 6, 5, 0, 0, 0, 0, time.UTC), time.Time{}),
+			want:     false,
+		},
+		{
+			name:     "both are zero",
+			interval: Interval{},
+			want:     false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.interval.IsValid()
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
