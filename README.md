@@ -1,4 +1,4 @@
-# Mutable
+# Timex
 [![Go Report Card](https://goreportcard.com/badge/github.com/askretov/timex)](https://goreportcard.com/report/github.com/askretov/timex)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2bafb63dc61840d8813c678db0043cf3)](https://www.codacy.com/gh/askretov/timex/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=askretov/timex&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/askretov/timex/branch/master/graph/badge.svg?token=1oTh2u1VEr)](https://codecov.io/gh/askretov/timex)

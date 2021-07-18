@@ -462,3 +462,97 @@ func TestInterval_IsValid(t *testing.T) {
 		})
 	}
 }
+
+func TestInterval_ExtendStart(t *testing.T) {
+	type args struct {
+		d time.Duration
+	}
+	tests := []struct {
+		name     string
+		interval Interval
+		args     args
+		want     Interval
+	}{
+		{
+			name: "add 2 days",
+			interval: NewInterval(
+				time.Date(2021, 6, 3, 0, 0, 0, 0, time.UTC),
+				time.Date(2021, 6, 5, 0, 0, 0, 0, time.UTC),
+			),
+			args: args{
+				d: time.Duration(Day * 2),
+			},
+			want: NewInterval(
+				time.Date(2021, 6, 1, 0, 0, 0, 0, time.UTC),
+				time.Date(2021, 6, 5, 0, 0, 0, 0, time.UTC),
+			),
+		},
+		{
+			name: "add 2 hours",
+			interval: NewInterval(
+				time.Date(2021, 6, 3, 0, 0, 0, 0, time.UTC),
+				time.Date(2021, 6, 5, 0, 0, 0, 0, time.UTC),
+			),
+			args: args{
+				d: time.Duration(Hour * 2),
+			},
+			want: NewInterval(
+				time.Date(2021, 6, 2, 22, 0, 0, 0, time.UTC),
+				time.Date(2021, 6, 5, 0, 0, 0, 0, time.UTC),
+			),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.interval.ExtendStart(tt.args.d)
+			assert.Equal(t, tt.want.String(), tt.interval.String())
+		})
+	}
+}
+
+func TestInterval_ExtendEnd(t *testing.T) {
+	type args struct {
+		d time.Duration
+	}
+	tests := []struct {
+		name     string
+		interval Interval
+		args     args
+		want     Interval
+	}{
+		{
+			name: "add 2 days",
+			interval: NewInterval(
+				time.Date(2021, 6, 3, 0, 0, 0, 0, time.UTC),
+				time.Date(2021, 6, 5, 0, 0, 0, 0, time.UTC),
+			),
+			args: args{
+				d: time.Duration(Day * 2),
+			},
+			want: NewInterval(
+				time.Date(2021, 6, 3, 0, 0, 0, 0, time.UTC),
+				time.Date(2021, 6, 7, 0, 0, 0, 0, time.UTC),
+			),
+		},
+		{
+			name: "add 2 hours",
+			interval: NewInterval(
+				time.Date(2021, 6, 3, 0, 0, 0, 0, time.UTC),
+				time.Date(2021, 6, 5, 0, 0, 0, 0, time.UTC),
+			),
+			args: args{
+				d: time.Duration(Hour * 2),
+			},
+			want: NewInterval(
+				time.Date(2021, 6, 3, 0, 0, 0, 0, time.UTC),
+				time.Date(2021, 6, 5, 2, 0, 0, 0, time.UTC),
+			),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.interval.ExtendEnd(tt.args.d)
+			assert.Equal(t, tt.want.String(), tt.interval.String())
+		})
+	}
+}

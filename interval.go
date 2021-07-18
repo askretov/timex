@@ -101,3 +101,21 @@ func (i Interval) HalfOpenEnd() Interval {
 func (i Interval) IsValid() bool {
 	return !i.start.IsZero() && !i.end.IsZero()
 }
+
+// ExtendStart extends i from the start back in time adding d in the form of i.Start.Add(-d)
+// Example:
+//		fmt.Println(i.Start()) // 2021-07-03T10:30:00Z
+//		i.ExtendStart(time.Day * 2)
+//		fmt.Println(i.Start()) // 2021-07-01T10:30:00Z
+func (i *Interval) ExtendStart(d time.Duration) {
+	i.start = i.start.Add(-d)
+}
+
+// ExtendEnd extends i to the end adding d for i.End()
+// Example:
+//		fmt.Println(i.End()) // 2021-07-03T10:30:00Z
+//		i.ExtendEnd(time.Day * 2)
+//		fmt.Println(i.End()) // 2021-07-05T10:30:00Z
+func (i *Interval) ExtendEnd(d time.Duration) {
+	i.end = i.end.Add(d)
+}

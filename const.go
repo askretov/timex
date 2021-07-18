@@ -12,4 +12,5 @@ const (
 	Minute      = 60 * Second
 	Hour        = 60 * Minute
 	Day         = 24 * Hour
+	Week        = 7 * Day
 )
